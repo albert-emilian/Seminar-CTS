@@ -1,5 +1,6 @@
 package ro.ase.cts.clase.readers;
 
+import ro.ase.cts.clase.Angajat;
 import ro.ase.cts.clase.Aplicant;
 import ro.ase.cts.clase.Elev;
 
@@ -9,29 +10,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class EleviReader  extends IReader{
+public class EleviReader extends IReader {
     public EleviReader(String filePath) {
         super(filePath);
     }
 
-    public  List<Aplicant> readAplicants() throws FileNotFoundException {
+    public List<Aplicant> readAplicants() throws FileNotFoundException {
         Scanner input2 = new Scanner(new File(super.filePath));
         input2.useDelimiter(",|\n");
         List<Aplicant> elevi = new ArrayList<>();
 
         while (input2.hasNext()) {
-            String nume = input2.next();
-            String prenume = input2.next();
-            int varsta = input2.nextInt();
-            int punctaj = input2.nextInt();
-            int nr = input2.nextInt();
-            String[] vect = new String[5];
-            for (int i = 0; i < nr; i++)
-                vect[i] = input2.next();
+            Elev elev = new Elev();
+            super.citireAplicant(input2,elev);
             int clasa = input2.nextInt();
             String tutore = input2.next();
-            Elev e = new Elev(nume, prenume, varsta, punctaj, nr, vect, clasa, tutore);
-            elevi.add(e);
+            elev.setClasa(clasa);
+            elev.setTutore(tutore);
+            elevi.add(elev);
         }
 
         input2.close();
